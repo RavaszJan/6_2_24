@@ -24,43 +24,79 @@
 # print(s2.meno)
 # s3=Singleton()
 
-class Document:
-    def create(self):
-        raise NotImplementedError("Metoda create() musi byt prepisana")
+#
+# # Factory
+# class Document:
+#     def create(self):
+#         raise NotImplementedError("Metoda create() musi byt prepisana")
+#
+# class PDFDocument(Document):
+#     def create(self):
+#         return "Vytvara sa PDF dokument"
+#
+# class WorfDocument(Document):
+#     def create(self):
+#         return "Vytvarame Word document"
+#
+# class TextDocument(Document):
+#     def create(self):
+#         return "Vztvarame Text document"
+#
+#
+# class Factory:
+#     def create_document(self,type):
+#         if type=="pdf":
+#             return PDFDocument()
+#         elif type=="word":
+#             return WorfDocument()
+#         elif type=="text":
+#             return TextDocument()
+#         else:
+#             raise ValueError("Neznamy typ dokumentu")
+#
+#
+# factory=Factory()
+#
+# pdf=factory.create_document("pdf")
+# print(pdf.create())
+#
+# word=factory.create_document("word")
+# print(word.create())
+#
+# text=factory.create_document("text")
+# print(text.create())
 
-class PDFDocument(Document):
-    def create(self):
-        return "Vytvara sa PDF dokument"
+# BUILDER
+class Form:
+    def __init__(self):
+        self.fields=[]
 
-class WorfDocument(Document):
-    def create(self):
-        return "Vytvarame Word document"
+    def add_field(self,field):
+        self.fields.append(field)
 
-class TextDocument(Document):
-    def create(self):
-        return "Vztvarame Text document"
+    def __str__(self):
+        return "\n".join(self.fields)
 
+class FormBuilder:
+    def __init__(self):
+        self.form=Form()
 
-class Factory:
-    def create_document(self,type):
-        if type=="pdf":
-            return PDFDocument()
-        elif type=="word":
-            return WorfDocument()
-        elif type=="text":
-            return TextDocument()
-        else:
-            raise ValueError("Neznamy typ dokumentu")
+    def add_name_field(self):
+        self.form.add_field("Name: [____________]")
+        return self
+    def add__address_field(self):
+        self.form.add_field("Adress: [__________]")
+        return self
+    def add_email_field(self):
+        self.form.add_field("Email: [____________")
+        return self
+    def add_country_field(self):
+        self.form.add_field("Country: [____________")
+        return self
 
+    def build(self):
+        return self.form
 
-factory=Factory()
-
-pdf=factory.create_document("pdf")
-print(pdf.create())
-
-word=factory.create_document("word")
-print(word.create())
-
-text=factory.create_document("text")
-print(text.create())
-
+builder=FormBuilder()
+form=builder.add_name_field().add__address_field().add_email_field().add_country_field().build()
+print(form)
