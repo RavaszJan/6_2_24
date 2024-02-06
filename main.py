@@ -175,3 +175,4 @@ burza.pridaj_investora(investor2)
 burza.set_cena_akcie(100)
 # OPRAVIT
 # MVC model viu kontroler
+#
