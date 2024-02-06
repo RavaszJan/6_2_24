@@ -101,39 +101,76 @@
 # form=builder.add_name_field().add__address_field().add_email_field().add_country_field().build()
 # print(form)
 
-# ADAPTER
-# DEKORATOR
+# # ADAPTER
+# # DEKORATOR
+#
+# class Napoj:
+#     def cena(sel):
+#         raise NotImplementedError
+# class Kava(Napoj):
+#     def cena(self):
+#         return 2
+#
+# class Caj(Napoj):
+#     def cena(self):
+#         return 3
+#
+# class PrisadaDecorator(Napoj):
+#     def __init__(self,napoj):
+#         self._napoj=napoj
+#
+#     def cena(self):
+#         return self._napoj.cena()
+#
+# class Mlieko(PrisadaDecorator):
+#     def cena(self):
+#         return self._napoj.cena()+5
+# class Cukor(PrisadaDecorator):
+#     def cena(self):
+#         return self._napoj.cena()+2
+#
+# moja_kava=Kava()
+# moja_kava=Mlieko(moja_kava)
+# moja_kava=Cukor(moja_kava)
+# print(moja_kava.cena())
+#
+# moj_caj=Caj()
+# moj_caj=Cukor(moj_caj)
+# print(moj_caj.cena())
 
-class Napoj:
-    def cena(sel):
-        raise NotImplementedError
-class Kava(Napoj):
-    def cena(self):
-        return 2
+# FACADE
+# OBSERVE
+# STRATEGY
 
-class Caj(Napoj):
-    def cena(self):
-        return 3
+class AkciovaBurza:
+    def __init__(self):
+        self.investori=[]
+        self._cena_akcie=None
 
-class PrisadaDecorator(Napoj):
-    def __init__(self,napoj):
-        self._napoj=napoj
+    def pridaj_investora(self,investor):
+        self._investori.appened(investor)
 
-    def cena(self):
-        return self._napoj.cena()
+    def odstran_investora(self,investor):
+        self._ivestori.remove(investor)
 
-class Mlieko(PrisadaDecorator):
-    def cena(self):
-        return self._napoj.cena()+5
-class Cukor(PrisadaDecorator):
-    def cena(self):
-        return self._napoj.cena()+2
+    def notifikuj_investorov(self):
+        for investor in self._investori:
+            investor.update(self._cena_akcie)
 
-moja_kava=Kava()
-moja_kava=Mlieko(moja_kava)
-moja_kava=Cukor(moja_kava)
-print(moja_kava.cena())
+    def sent_cena_akcie(self,cena):
+        self._cena_akcie=cena
+        self.notifikuj_investorov()
 
-moj_caj=Caj()
-moj_caj=Cukor(moj_caj)
-print(moj_caj.cena())
+class Investor:
+    def update(self,cena):
+        print(f"Aktualizovane cena akcie:{cena}")
+
+burza=AkciovaBurza()
+investor1=Investor()
+investor2=Investor()
+
+burza.pridaj_investora(investor1)
+burza.pridaj_investora(investor2)
+
+burza.set_cena_akcie(100)
+# OPRAVIT
